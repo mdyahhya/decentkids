@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Decent Kids Wear – Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:       #f472b6;
+      --pink-light: #fce7f3;
+      --pink-mid:   #fbcfe8;
+      --pink-dark:  #db2777;
+      --black:      #111111;
+      --gray:       #6b7280;
+      --gray-light: #f9fafb;
+      --white:      #ffffff;
+      --shadow:     0 4px 24px rgba(244,114,182,0.13);
+      --shadow-lg:  0 8px 40px rgba(244,114,182,0.18);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      min-height: 100vh;
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar-brand-custom {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--black) !important;
+      letter-spacing: -0.5px;
+    }
+    .navbar-brand-custom span { color: var(--pink); }
+    .nav-top {
+      background: var(--white);
+      border-bottom: 2px solid var(--pink-mid);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 12px rgba(244,114,182,0.08);
+    }
+
+    /* ── HERO ── */
+    .hero-section {
+      background: linear-gradient(135deg, var(--white) 60%, var(--pink-light) 100%);
+      padding: 70px 0 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, var(--pink-mid) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, var(--pink-light) 0%, transparent 70%);
+      bottom: -80px; left: -60px;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--pink-light);
+      color: var(--pink-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 16px;
+      border-radius: 50px;
+      border: 1px solid var(--pink-mid);
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .hero-title span { color: var(--pink); }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto 10px;
+      font-weight: 400;
+    }
+
+    /* ── LOGIN CARD WRAPPER ── */
+    .login-section {
+      padding: 50px 0 70px;
+      background: var(--white);
+    }
+    .login-card {
+      background: var(--white);
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── TABS ── */
+    .tab-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1.5px solid var(--pink-mid);
+    }
+    .tab-btn {
+      padding: 18px 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray);
+      background: var(--gray-light);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: 0.2px;
+    }
+    .tab-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .tab-btn.active {
+      background: var(--white);
+      color: var(--pink-dark);
+      border-bottom: 3px solid var(--pink);
+      margin-bottom: -1.5px;
+    }
+    .tab-btn:first-child { border-right: 1px solid var(--pink-mid); }
+
+    /* ── FORM PANELS ── */
+    .tab-panel { display: none; padding: 36px 36px 28px; }
+    .tab-panel.active { display: block; }
+
+    .panel-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .panel-sub {
+      font-size: 0.83rem;
+      color: var(--gray);
+      margin-bottom: 28px;
+    }
+
+    .form-label-custom {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-control-custom {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      color: var(--black);
+      background: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      margin-bottom: 18px;
+    }
+    .form-control-custom:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(244,114,182,0.12);
+    }
+    .input-group-custom {
+      position: relative;
+    }
+    .input-group-custom .form-control-custom { padding-right: 42px; margin-bottom: 18px; }
+    .eye-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%; transform: translateY(-60%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gray);
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    .eye-btn svg { width: 18px; height: 18px; }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: var(--pink);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 14px rgba(244,114,182,0.3);
+      margin-top: 4px;
+    }
+    .btn-login:hover {
+      background: var(--pink-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(244,114,182,0.38);
+    }
+    .btn-login:active { transform: translateY(0); }
+
+    .divider {
+      text-align: center;
+      position: relative;
+      margin: 22px 0 18px;
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    .divider::before, .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 38%;
+      height: 1px;
+      background: var(--pink-mid);
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .btn-register {
+      width: 100%;
+      padding: 12px;
+      background: var(--white);
+      color: var(--pink-dark);
+      border: 1.5px solid var(--pink);
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-register:hover {
+      background: var(--pink-light);
+    }
+
+    /* ── REGISTER FORM (hidden by default) ── */
+    .register-form { display: none; }
+    .register-form.show { display: block; }
+    .login-form.hide { display: none; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--pink-dark);
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    .back-link svg { width: 15px; height: 15px; }
+
+    /* ── ALERT ── */
+    .alert-custom {
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .alert-error { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
+    .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+    /* ── ADMIN BADGE ── */
+    .admin-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--pink-light);
+      border: 1px solid var(--pink-mid);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 22px;
+      font-size: 0.82rem;
+      color: var(--pink-dark);
+      font-weight: 500;
+    }
+    .admin-indicator svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--black);
+      color: #9ca3af;
+      text-align: center;
+      padding: 28px 16px;
+      font-size: 0.82rem;
+    }
+    .footer strong { color: var(--pink); }
+    .footer .partners { margin-top: 6px; font-size: 0.78rem; color: #6b7280; }
+
+    /* ── FEATURES ROW ── */
+    .features-row {
+      background: var(--pink-light);
+      border-top: 1.5px solid var(--pink-mid);
+      border-bottom: 1.5px solid var(--pink-mid);
+      padding: 28px 0;
+    }
+    .feature-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: var(--white);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow);
+    }
+    .feature-icon svg { width: 24px; height: 24px; color: var(--pink-dark); }
+    .feature-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .feature-desc {
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-top: -6px;
+    }
+
+    /* responsive */
+    @media (max-width: 576px) {
+      .tab-panel { padding: 26px 20px 22px; }
+      .hero-section { padding: 50px 0 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav-top">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand-custom" href="#">
+      <svg style="width:22px;height:22px;vertical-align:-4px;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      Decent <span>Kids Wear</span>
+    </a>
+    <span style="font-size:0.78rem;color:var(--gray);font-weight:500">Quality Fashion for Little Ones</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container position-relative" style="z-index:1">
+    <div class="hero-badge">
+      <svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="#db2777"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Premium Kids Fashion
+    </div>
+    <h1 class="hero-title">Welcome to<br/><span>Decent Kids Wear</span></h1>
+    <p class="hero-sub">Adorable, comfortable & stylish clothing for your little ones. Trusted by thousands of families.</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="features-row">
+  <div class="container">
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="feature-label">Free Delivery</div>
+          <div class="feature-desc">On orders above ₹499</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="feature-label">100% Safe</div>
+          <div class="feature-desc">Child-safe materials</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="feature-label">Loved by Kids</div>
+          <div class="feature-desc">Trending designs</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="feature-label">Easy Returns</div>
+          <div class="feature-desc">7-day return policy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN SECTION -->
+<section class="login-section">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 style="font-size:1.5rem;font-weight:700;color:var(--black)">Sign In to Continue</h2>
+      <p style="font-size:0.85rem;color:var(--gray)">Choose your account type below</p>
+    </div>
+
+    <div class="login-card">
+      <!-- TABS -->
+      <div class="tab-header">
+        <button class="tab-btn active" id="tab-customer" onclick="switchTab('customer')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Customer
+        </button>
+        <button class="tab-btn" id="tab-admin" onclick="switchTab('admin')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Admin
+        </button>
+      </div>
+
+      <!-- CUSTOMER PANEL -->
+      <div class="tab-panel active" id="panel-customer">
+
+        <!-- LOGIN FORM -->
+        <div id="customer-login-form">
+          <p class="panel-title">Customer Login</p>
+          <p class="panel-sub">Welcome back! Sign in to shop.</p>
+          <div id="cust-alert" class="alert-custom"></div>
+          <label class="form-label-custom">Email Address</label>
+          <input type="email" id="cust-email" class="form-control-custom" placeholder="your@email.com"/>
+          <label class="form-label-custom">Password</label>
+          <div class="input-group-custom">
+            <input type="password" id="cust-pass" class="form-control-custom" placeholder="Enter password"/>
+            <button class="eye-btn" onclick="togglePass('cust-pass',this)" type="button">
+              <svg id="eye-cust" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <button class="btn-login" onclick="customerLogin()">
+            Sign In
+            <svg style="width:16px;height:16px;vertical-align:-3px;margin-left:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <div class="divider">New here?</div>
+          <button class="btn-register" onclick="showRegister()">Create Account</button>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="customer-register-form" class="register-form">
+          <button class="back-link" onclick="showLogin()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to Login
+          </button>
+          <p class="panel-title">Create Account</p>
+          <p class="panel-sub">Join Decent Kids Wear today!</p>
+          <div id="reg-alert" class="alert-custom"></div>
+          <label class="form-label-custom">Full Name</label>
+          <input type="text" id="reg-name" class="form-control-custom" placeholder="Your full name"/>
+          <label class="form-label-custom">Age</label>
+          <input type="number" id="reg-age" class="form-control-custom" placeholder="Your age" min="1" max="100"/>
+          <label class="form-label-custom">Gender</label>
+          <select id="reg-gender" class="form-control-custom">
+            <option value="">Select gender</option>
+            <option>Male</option><option>Female</option><option>Prefer not to say</option>
+          </select>
+          <label class="form-label-custom">Phone Number</label>
+          <input type="tel" id="reg-phone" class="form-control-custom" placeholder="10-digit mobile number"/>
+          <label class="form-label-custom">Email Address</label>
+          <input type="email" id="reg-email" class="form-control-custom" placeholder="your@email.com"/>
+          <label class="form-label-custom">Address</label>
+          <input type="text" id="reg-address" class="form-control-custom" placeholder="Your full address"/>
+          <label class="form-label-custom">Password</label>
+          <div class="input-group-custom">
+            <input type="password" id="reg-pass" class="form-control-custom" placeholder="Create a password"/>
+            <button class="eye-btn" onclick="togglePass('reg-pass',this)" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <button class="btn-login" onclick="registerCustomer()">Register Now</button>
+        </div>
+      </div>
+
+      <!-- ADMIN PANEL -->
+      <div class="tab-panel" id="panel-admin">
+        <p class="panel-title">Admin Login</p>
+        <p class="panel-sub">Manage your store dashboard.</p>
+        <div class="admin-indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Restricted access — Admin only
+        </div>
+        <div id="admin-alert" class="alert-custom"></div>
+        <label class="form-label-custom">Username / Email</label>
+        <input type="text" id="admin-user" class="form-control-custom" placeholder="admin"/>
+        <label class="form-label-custom">Password</label>
+        <div class="input-group-custom">
+          <input type="password" id="admin-pass" class="form-control-custom" placeholder="Enter admin password"/>
+          <button class="eye-btn" onclick="togglePass('admin-pass',this)" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <button class="btn-login" onclick="adminLogin()">
+          Admin Sign In
+          <svg style="width:16px;height:16px;vertical-align:-3px;margin-left:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>&copy; 2026 <strong>Decent Kids Wear</strong>. All Rights Reserved.</div>
+  <div class="partners">Project by <strong style="color:#f9a8d4">Mahek Shaikh</strong> &amp; <strong style="color:#f9a8d4">Sakshi Gaikwad</strong></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ── Init default admin credentials if not set ──
+  (function(){
+    if(!localStorage.getItem('dkw_admin')){
+      localStorage.setItem('dkw_admin', JSON.stringify({username:'admin', password:'admin123'}));
+    }
+    if(!localStorage.getItem('dkw_customers')){
+      localStorage.setItem('dkw_customers', JSON.stringify([]));
+    }
+  })();
+
+  // ── Tab switch ──
+  function switchTab(tab){
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-'+tab).classList.add('active');
+    document.getElementById('panel-'+tab).classList.add('active');
+  }
+
+  // ── Toggle password visibility ──
+  function togglePass(id, btn){
+    const inp = document.getElementById(id);
+    const isPass = inp.type === 'password';
+    inp.type = isPass ? 'text' : 'password';
+    btn.querySelector('svg').innerHTML = isPass
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23" stroke-linecap="round"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+
+  // ── Show alert ──
+  function showAlert(id, msg, type){
+    const el = document.getElementById(id);
+    el.className = 'alert-custom alert-'+type;
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(()=>{ el.style.display='none'; }, 4000);
+  }
+
+  // ── Customer Login ──
+  function customerLogin(){
+    const email = document.getElementById('cust-email').value.trim();
+    const pass  = document.getElementById('cust-pass').value;
+    if(!email || !pass){ showAlert('cust-alert','Please fill all fields.','error'); return; }
+    const customers = JSON.parse(localStorage.getItem('dkw_customers')||'[]');
+    const user = customers.find(c => c.email===email && c.password===pass);
+    if(!user){ showAlert('cust-alert','Invalid email or password.','error'); return; }
+    localStorage.setItem('dkw_loggedCustomer', JSON.stringify(user));
+    showAlert('cust-alert','Login successful! Redirecting...','success');
+    setTimeout(()=>{ window.location.href='customer.html'; }, 1000);
+  }
+
+  // ── Customer Register ──
+  function registerCustomer(){
+    const name    = document.getElementById('reg-name').value.trim();
+    const age     = document.getElementById('reg-age').value.trim();
+    const gender  = document.getElementById('reg-gender').value;
+    const phone   = document.getElementById('reg-phone').value.trim();
+    const email   = document.getElementById('reg-email').value.trim();
+    const address = document.getElementById('reg-address').value.trim();
+    const pass    = document.getElementById('reg-pass').value;
+    if(!name||!age||!gender||!phone||!email||!address||!pass){
+      showAlert('reg-alert','Please fill all fields.','error'); return;
+    }
+    if(!/^[0-9]{10}$/.test(phone)){ showAlert('reg-alert','Enter a valid 10-digit phone number.','error'); return; }
+    if(pass.length < 6){ showAlert('reg-alert','Password must be at least 6 characters.','error'); return; }
+    const customers = JSON.parse(localStorage.getItem('dkw_customers')||'[]');
+    if(customers.find(c=>c.email===email)){ showAlert('reg-alert','Email already registered.','error'); return; }
+    const newUser = {
+      id: 'CU'+Date.now(),
+      name, age, gender, phone, email, address, password: pass,
+      createdAt: new Date().toLocaleDateString('en-IN')
+    };
+    customers.push(newUser);
+    localStorage.setItem('dkw_customers', JSON.stringify(customers));
+    showAlert('reg-alert','Account created! Please login.','success');
+    setTimeout(()=>{ showLogin(); }, 1500);
+  }
+
+  // ── Admin Login ──
+  function adminLogin(){
+    const user = document.getElementById('admin-user').value.trim();
+    const pass = document.getElementById('admin-pass').value;
+    if(!user||!pass){ showAlert('admin-alert','Please fill all fields.','error'); return; }
+    const admin = JSON.parse(localStorage.getItem('dkw_admin'));
+    if((user===admin.username||user===admin.email) && pass===admin.password){
+      localStorage.setItem('dkw_adminLoggedIn','true');
+      showAlert('admin-alert','Welcome Admin! Redirecting...','success');
+      setTimeout(()=>{ window.location.href='admin.html'; }, 1000);
+    } else {
+      showAlert('admin-alert','Invalid admin credentials.','error');
+    }
+  }
+
+  // ── Register/Login toggle ──
+  function showRegister(){
+    document.getElementById('customer-login-form').style.display='none';
+    document.getElementById('customer-register-form').style.display='block';
+  }
+  function showLogin(){
+    document.getElementById('customer-login-form').style.display='block';
+    document.getElementById('customer-register-form').style.display='none';
+  }
+
+  // ── Enter key support ──
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Enter'){
+      const activePanel = document.querySelector('.tab-panel.active').id;
+      if(activePanel==='panel-customer') customerLogin();
+      if(activePanel==='panel-admin') adminLogin();
+    }
+  });
+
+  // ── If already logged in, redirect ──
+  if(localStorage.getItem('dkw_adminLoggedIn')==='true') window.location.href='admin.html';
+  if(localStorage.getItem('dkw_loggedCustomer')) window.location.href='customer.html';
+</script>
+</body>
+</html>

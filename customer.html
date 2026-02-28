@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Decent Kids Wear</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --pink:#f472b6;--pink-light:#fce7f3;--pink-mid:#fbcfe8;--pink-dark:#db2777;
+      --black:#111111;--gray:#6b7280;--gray-light:#f9fafb;--white:#ffffff;
+      --shadow:0 4px 24px rgba(244,114,182,0.13);--shadow-lg:0 8px 40px rgba(244,114,182,0.18);
+    }
+    body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden}
+
+    /* ── NAVBAR ── */
+    .navbar-main{
+      background:var(--white);border-bottom:1.5px solid var(--pink-mid);
+      padding:0;position:sticky;top:0;z-index:200;
+      box-shadow:0 2px 12px rgba(244,114,182,0.08);
+    }
+    .navbar-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 24px;max-width:1200px;margin:0 auto;
+    }
+    .nav-logo{
+      font-size:1.25rem;font-weight:800;color:var(--black);
+      text-decoration:none;display:flex;align-items:center;gap:8px;
+    }
+    .nav-logo span{color:var(--pink)}
+    .nav-logo svg{width:24px;height:24px;flex-shrink:0}
+    .nav-links{display:flex;align-items:center;gap:4px}
+    .nav-link-item{
+      padding:8px 14px;font-size:0.87rem;font-weight:500;color:var(--gray);
+      text-decoration:none;border-radius:8px;transition:all 0.2s;cursor:pointer;
+      border:none;background:none;font-family:'Poppins',sans-serif;
+    }
+    .nav-link-item:hover{background:var(--pink-light);color:var(--pink-dark)}
+    .nav-link-item.active{color:var(--pink-dark);font-weight:600}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .cart-btn{
+      display:flex;align-items:center;gap:6px;padding:9px 16px;
+      background:var(--pink);color:var(--white);border:none;border-radius:10px;
+      font-family:'Poppins',sans-serif;font-size:0.87rem;font-weight:600;
+      cursor:pointer;transition:all 0.2s;text-decoration:none;
+      box-shadow:0 3px 10px rgba(244,114,182,0.3);
+    }
+    .cart-btn:hover{background:var(--pink-dark);color:var(--white)}
+    .cart-btn svg{width:16px;height:16px}
+    .cart-count{
+      background:var(--white);color:var(--pink-dark);
+      font-size:0.72rem;font-weight:700;padding:1px 6px;
+      border-radius:50px;min-width:18px;text-align:center;
+    }
+    .profile-btn{
+      width:36px;height:36px;border-radius:50%;background:var(--pink-light);
+      border:2px solid var(--pink-mid);display:flex;align-items:center;
+      justify-content:center;cursor:pointer;font-size:0.8rem;font-weight:700;
+      color:var(--pink-dark);text-decoration:none;transition:all 0.2s;flex-shrink:0;
+    }
+    .profile-btn:hover{background:var(--pink-mid);color:var(--pink-dark)}
+    .hamburger{
+      display:none;background:none;border:none;cursor:pointer;padding:4px;
+    }
+    .hamburger svg{width:22px;height:22px;color:var(--black)}
+    .mobile-menu{
+      display:none;border-top:1px solid var(--pink-mid);padding:10px 16px;
+      flex-direction:column;gap:4px;background:var(--white);
+    }
+    .mobile-menu.open{display:flex}
+    .mobile-menu .nav-link-item{width:100%;text-align:left;padding:10px 14px}
+
+    /* ── HERO ── */
+    .hero{
+      background:linear-gradient(135deg,var(--white) 55%,var(--pink-light) 100%);
+      padding:60px 24px;min-height:420px;display:flex;align-items:center;
+      position:relative;overflow:hidden;
+    }
+    .hero::before{
+      content:'';position:absolute;width:500px;height:500px;
+      background:radial-gradient(circle,var(--pink-mid) 0%,transparent 65%);
+      top:-150px;right:-100px;border-radius:50%;opacity:0.5;pointer-events:none;
+    }
+    .hero::after{
+      content:'';position:absolute;width:300px;height:300px;
+      background:radial-gradient(circle,var(--pink-light) 0%,transparent 70%);
+      bottom:-100px;left:-60px;border-radius:50%;opacity:0.6;pointer-events:none;
+    }
+    .hero-content{max-width:1200px;margin:0 auto;position:relative;z-index:1;width:100%}
+    .hero-banner-img{
+      width:100%;max-height:380px;object-fit:cover;border-radius:20px;
+      box-shadow:var(--shadow-lg);display:none;margin-bottom:30px;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:var(--pink-light);color:var(--pink-dark);
+      font-size:0.78rem;font-weight:600;padding:5px 14px;
+      border-radius:50px;border:1px solid var(--pink-mid);margin-bottom:18px;
+    }
+    .hero-badge svg{width:12px;height:12px}
+    .hero-title{
+      font-size:clamp(2rem,5vw,3.4rem);font-weight:800;
+      color:var(--black);line-height:1.15;margin-bottom:14px;
+    }
+    .hero-title span{color:var(--pink)}
+    .hero-tagline{
+      font-size:1rem;color:var(--gray);max-width:520px;
+      margin-bottom:28px;font-weight:400;line-height:1.6;
+    }
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-hero-primary{
+      padding:13px 28px;background:var(--pink);color:var(--white);border:none;
+      border-radius:12px;font-family:'Poppins',sans-serif;font-size:0.95rem;
+      font-weight:600;cursor:pointer;transition:all 0.2s;
+      box-shadow:0 4px 16px rgba(244,114,182,0.32);
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    }
+    .btn-hero-primary:hover{background:var(--pink-dark);transform:translateY(-2px);color:var(--white)}
+    .btn-hero-primary svg{width:16px;height:16px}
+    .btn-hero-secondary{
+      padding:13px 28px;background:var(--white);color:var(--pink-dark);
+      border:1.5px solid var(--pink);border-radius:12px;
+      font-family:'Poppins',sans-serif;font-size:0.95rem;font-weight:600;
+      cursor:pointer;transition:all 0.2s;text-decoration:none;
+      display:inline-flex;align-items:center;gap:8px;
+    }
+    .btn-hero-secondary:hover{background:var(--pink-light)}
+
+    /* ── FEATURES STRIP ── */
+    .features-strip{
+      background:var(--pink-light);border-top:1.5px solid var(--pink-mid);
+      border-bottom:1.5px solid var(--pink-mid);padding:22px 24px;
+    }
+    .feature-pill{
+      display:flex;align-items:center;gap:8px;
+      font-size:0.82rem;font-weight:600;color:var(--black);
+    }
+    .feature-pill svg{width:18px;height:18px;color:var(--pink-dark);flex-shrink:0}
+
+    /* ── SECTION COMMON ── */
+    .section{padding:60px 24px}
+    .section-header{text-align:center;margin-bottom:40px}
+    .section-label{
+      display:inline-block;background:var(--pink-light);color:var(--pink-dark);
+      font-size:0.75rem;font-weight:700;padding:4px 14px;border-radius:50px;
+      border:1px solid var(--pink-mid);margin-bottom:12px;letter-spacing:0.5px;
+      text-transform:uppercase;
+    }
+    .section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:var(--black);margin-bottom:10px}
+    .section-sub{font-size:0.9rem;color:var(--gray);max-width:500px;margin:0 auto}
+
+    /* ── ABOUT SECTION ── */
+    .about-section{background:var(--white)}
+    .about-card{
+      background:var(--pink-light);border:1.5px solid var(--pink-mid);
+      border-radius:20px;padding:36px;height:100%;
+    }
+    .about-icon{
+      width:52px;height:52px;background:var(--white);border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:var(--shadow);margin-bottom:16px;
+    }
+    .about-icon svg{width:26px;height:26px;color:var(--pink-dark)}
+    .about-card-title{font-size:1rem;font-weight:700;color:var(--black);margin-bottom:8px}
+    .about-card-text{font-size:0.85rem;color:var(--gray);line-height:1.6}
+    .about-main{
+      background:var(--white);border:1.5px solid var(--pink-mid);
+      border-radius:20px;padding:40px;
+    }
+    .about-main-title{font-size:1.5rem;font-weight:800;color:var(--black);margin-bottom:12px}
+    .about-main-title span{color:var(--pink)}
+    .about-text{font-size:0.9rem;color:var(--gray);line-height:1.8;margin-bottom:16px}
+    .project-credit{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--pink-light);border:1px solid var(--pink-mid);
+      border-radius:10px;padding:10px 16px;margin-top:8px;
+    }
+    .project-credit svg{width:16px;height:16px;color:var(--pink-dark)}
+    .project-credit span{font-size:0.82rem;font-weight:600;color:var(--pink-dark)}
+
+    /* ── CATEGORIES ── */
+    .cat-section{background:var(--gray-light)}
+    .cat-chip{
+      display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
+      border:1.5px solid var(--pink-mid);border-radius:50px;
+      font-size:0.85rem;font-weight:600;color:var(--gray);
+      background:var(--white);cursor:pointer;transition:all 0.2s;
+      text-decoration:none;
+    }
+    .cat-chip:hover,.cat-chip.active{
+      background:var(--pink);color:var(--white);
+      border-color:var(--pink);box-shadow:0 3px 12px rgba(244,114,182,0.25);
+    }
+    .cat-chip svg{width:15px;height:15px}
+
+    /* ── PRODUCTS GRID ── */
+    .products-section{background:var(--white)}
+    .product-card{
+      background:var(--white);border:1.5px solid var(--pink-mid);
+      border-radius:18px;overflow:hidden;transition:all 0.25s;
+      box-shadow:0 2px 12px rgba(244,114,182,0.07);height:100%;
+      display:flex;flex-direction:column;
+    }
+    .product-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 32px rgba(244,114,182,0.18);
+      border-color:var(--pink);
+    }
+    .product-img-wrap{
+      position:relative;overflow:hidden;background:var(--pink-light);
+      aspect-ratio:4/3;flex-shrink:0;
+    }
+    .product-img-wrap img{
+      width:100%;height:100%;object-fit:cover;transition:transform 0.35s;
+    }
+    .product-card:hover .product-img-wrap img{transform:scale(1.05)}
+    .product-no-img{
+      width:100%;height:100%;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:8px;
+    }
+    .product-no-img svg{width:40px;height:40px;color:var(--pink-dark);opacity:0.4}
+    .product-no-img span{font-size:0.75rem;color:var(--gray)}
+    .sale-pill{
+      position:absolute;top:10px;left:10px;background:var(--pink-dark);
+      color:var(--white);font-size:0.7rem;font-weight:700;
+      padding:3px 10px;border-radius:50px;
+    }
+    .product-body{padding:16px;display:flex;flex-direction:column;flex:1}
+    .product-category{
+      font-size:0.72rem;font-weight:600;color:var(--pink-dark);
+      background:var(--pink-light);border-radius:50px;padding:2px 10px;
+      display:inline-block;margin-bottom:8px;
+    }
+    .product-name{
+      font-size:0.95rem;font-weight:700;color:var(--black);
+      margin-bottom:4px;line-height:1.3;
+    }
+    .product-desc{
+      font-size:0.78rem;color:var(--gray);margin-bottom:10px;
+      line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;
+      -webkit-box-orient:vertical;overflow:hidden;
+    }
+    .product-meta{
+      display:flex;align-items:center;gap:8px;margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .product-meta span{
+      font-size:0.75rem;color:var(--gray);background:#f3f4f6;
+      padding:2px 8px;border-radius:50px;
+    }
+    .product-price-row{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-top:auto;
+    }
+    .product-price{font-size:1.1rem;font-weight:800;color:var(--black)}
+    .product-price-original{
+      font-size:0.78rem;color:var(--gray);text-decoration:line-through;margin-left:6px;
+    }
+    .product-price-discount{font-size:1.1rem;font-weight:800;color:var(--pink-dark)}
+    .btn-add-cart{
+      padding:8px 14px;background:var(--pink);color:var(--white);border:none;
+      border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.8rem;
+      font-weight:600;cursor:pointer;transition:all 0.2s;
+      display:flex;align-items:center;gap:5px;white-space:nowrap;
+    }
+    .btn-add-cart:hover{background:var(--pink-dark)}
+    .btn-add-cart svg{width:14px;height:14px}
+    .btn-out-stock{
+      padding:8px 14px;background:#f3f4f6;color:var(--gray);border:none;
+      border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.8rem;
+      font-weight:600;cursor:not-allowed;
+    }
+    .stock-low{font-size:0.72rem;color:#d97706;font-weight:600}
+
+    /* ── TOAST ── */
+    .toast-wrap{
+      position:fixed;bottom:24px;right:24px;z-index:9999;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .toast-item{
+      background:var(--black);color:var(--white);padding:12px 20px;
+      border-radius:10px;font-size:0.85rem;font-weight:500;
+      display:flex;align-items:center;gap:10px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.2);
+      animation:slideIn 0.3s ease;min-width:220px;
+    }
+    .toast-item svg{width:16px;height:16px;color:var(--pink);flex-shrink:0}
+    @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+    /* ── EMPTY PRODUCTS ── */
+    .empty-prods{
+      text-align:center;padding:60px 20px;color:var(--gray);
+    }
+    .empty-prods svg{width:56px;height:56px;opacity:0.3;margin-bottom:14px}
+    .empty-prods h3{font-size:1rem;font-weight:600;margin-bottom:6px;color:var(--black)}
+    .empty-prods p{font-size:0.85rem}
+
+    /* ── STATS STRIP ── */
+    .stats-strip{
+      background:var(--black);padding:40px 24px;
+    }
+    .stat-number{font-size:2rem;font-weight:800;color:var(--pink);line-height:1}
+    .stat-lbl{font-size:0.82rem;color:#9ca3af;margin-top:4px}
+
+    /* ── TESTIMONIALS ── */
+    .testi-section{background:var(--pink-light)}
+    .testi-card{
+      background:var(--white);border:1.5px solid var(--pink-mid);
+      border-radius:16px;padding:24px;height:100%;
+    }
+    .stars{color:var(--pink);font-size:0.9rem;margin-bottom:10px;letter-spacing:2px}
+    .testi-text{font-size:0.87rem;color:var(--gray);line-height:1.6;margin-bottom:16px;font-style:italic}
+    .testi-author{font-size:0.83rem;font-weight:700;color:var(--black)}
+    .testi-role{font-size:0.75rem;color:var(--gray)}
+
+    /* ── FOOTER ── */
+    .footer-main{background:var(--black);color:#9ca3af;padding:50px 24px 28px}
+    .footer-logo{font-size:1.2rem;font-weight:800;color:var(--white);margin-bottom:10px}
+    .footer-logo span{color:var(--pink)}
+    .footer-desc{font-size:0.83rem;line-height:1.6;color:#9ca3af;max-width:280px}
+    .footer-heading{font-size:0.82rem;font-weight:700;color:var(--white);
+      text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px}
+    .footer-link{
+      display:block;font-size:0.83rem;color:#9ca3af;text-decoration:none;
+      margin-bottom:8px;transition:color 0.2s;cursor:pointer;background:none;border:none;
+      font-family:'Poppins',sans-serif;text-align:left;padding:0;
+    }
+    .footer-link:hover{color:var(--pink)}
+    .footer-bottom{
+      border-top:1px solid #1f2937;padding-top:20px;margin-top:36px;
+      display:flex;flex-wrap:wrap;justify-content:space-between;
+      align-items:center;gap:10px;font-size:0.78rem;color:#6b7280;
+    }
+    .footer-bottom strong{color:var(--pink)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .hero{padding:40px 20px}
+      .section{padding:40px 16px}
+      .hero-actions{flex-direction:column;max-width:280px}
+      .btn-hero-primary,.btn-hero-secondary{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar-main">
+  <div class="navbar-inner">
+    <a class="nav-logo" href="customer.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Decent <span>Kids Wear</span>
+    </a>
+    <div class="nav-links">
+      <button class="nav-link-item active" onclick="scrollTo('home')">Home</button>
+      <button class="nav-link-item" onclick="scrollTo('about')">About</button>
+      <a class="nav-link-item" href="products.html">Products</a>
+      <button class="nav-link-item" onclick="scrollTo('contact')">Contact</button>
+    </div>
+    <div class="nav-right">
+      <a class="cart-btn" href="cart.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Cart <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <a class="profile-btn" href="profile.html" id="profileBtn" title="My Profile">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="hamburger" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="nav-link-item" onclick="scrollTo('home');toggleMenu()">Home</button>
+    <button class="nav-link-item" onclick="scrollTo('about');toggleMenu()">About</button>
+    <a class="nav-link-item" href="products.html">Products</a>
+    <button class="nav-link-item" onclick="scrollTo('contact');toggleMenu()">Contact</button>
+    <button class="nav-link-item" style="color:#be123c" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <img class="hero-banner-img" id="heroBanner" src="" alt="Banner"/>
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="#db2777"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Premium Kids Fashion
+        </div>
+        <h1 class="hero-title">
+          Style that makes<br/>your little ones<br/><span id="heroTagline">shine bright</span> ✦
+        </h1>
+        <p class="hero-tagline" id="heroSubtag">Adorable, comfortable &amp; trendy clothing for kids. Crafted with love and care for your little champions.</p>
+        <div class="hero-actions">
+          <a class="btn-hero-primary" href="products.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Shop Now
+          </a>
+          <button class="btn-hero-secondary" onclick="scrollTo('about')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            About Us
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features-strip">
+  <div class="container">
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          Free Delivery above ₹499
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          100% Safe Materials
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+          7-Day Easy Returns
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Loved by 1000+ Families
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Why Choose Decent Kids Wear?</h2>
+      <p class="section-sub">We believe every child deserves to look and feel amazing, every single day.</p>
+    </div>
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-6">
+        <div class="about-main">
+          <h3 class="about-main-title">About <span>Decent Kids Wear</span></h3>
+          <p class="about-text" id="aboutText">
+            Decent Kids Wear is your go-to destination for premium, comfortable, and stylish clothing for children of all ages. We bring you the finest collection of kids fashion — from everyday casuals to festive ethnic wear — all crafted with the highest quality materials.
+          </p>
+          <p class="about-text">Our clothes are designed keeping kids' comfort first. Soft fabrics, safe dyes, durable stitching — every piece is made with love for your little ones.</p>
+          <div class="project-credit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Project by Mahek Shaikh &amp; Sakshi Gaikwad</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row g-3 h-100">
+          <div class="col-6">
+            <div class="about-card">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="about-card-title">Safe &amp; Certified</div>
+              <div class="about-card-text">All fabrics are skin-tested and certified safe for children.</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="about-card">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div class="about-card-title">Made with Love</div>
+              <div class="about-card-text">Every piece is crafted with attention to detail and care.</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="about-card">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              </div>
+              <div class="about-card-title">Wide Range</div>
+              <div class="about-card-text">From newborns to teens — we cover every age group.</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="about-card">
+              <div class="about-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div class="about-card-title">Best Prices</div>
+              <div class="about-card-text">Premium quality at prices that won't break the bank.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-6 col-md-3">
+        <div class="stat-number">1000+</div>
+        <div class="stat-lbl">Happy Families</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-number" id="statProducts">0+</div>
+        <div class="stat-lbl">Products Available</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-number">8</div>
+        <div class="stat-lbl">Categories</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-number">4.9★</div>
+        <div class="stat-lbl">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CATEGORIES ── -->
+<section class="section cat-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Browse</div>
+      <h2 class="section-title">Shop by Category</h2>
+      <p class="section-sub">Find exactly what you're looking for</p>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a class="cat-chip active" href="products.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        All Products
+      </a>
+      <a class="cat-chip" href="products.html?cat=Frocks+%26+Dresses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Frocks &amp; Dresses
+      </a>
+      <a class="cat-chip" href="products.html?cat=Tops+%26+T-Shirts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        Tops &amp; T-Shirts
+      </a>
+      <a class="cat-chip" href="products.html?cat=Ethnic+Wear">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Ethnic Wear
+      </a>
+      <a class="cat-chip" href="products.html?cat=Winter+Wear">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>
+        Winter Wear
+      </a>
+      <a class="cat-chip" href="products.html?cat=Accessories">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        Accessories
+      </a>
+      <a class="cat-chip" href="products.html?cat=Footwear">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9 6 9-6M3 12l9 6 9-6"/></svg>
+        Footwear
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED PRODUCTS ── -->
+<section class="section products-section" id="featured">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Featured</div>
+      <h2 class="section-title">New Arrivals &amp; Sale</h2>
+      <p class="section-sub">Handpicked favourites — fresh and trendy</p>
+    </div>
+    <div id="featuredGrid" class="row g-3">
+      <div class="col-12">
+        <div class="empty-prods">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <h3>No products yet</h3>
+          <p>Admin will add products soon. Check back later!</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4" id="viewAllWrap" style="display:none!important">
+      <a href="products.html" class="btn-hero-primary" style="display:inline-flex">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        View All Products
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section testi-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Reviews</div>
+      <h2 class="section-title">What Parents Say</h2>
+      <p class="section-sub">Real reviews from our happy customers</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"The quality is absolutely amazing! My daughter loves her new frock. It's so soft and the colors are vibrant. Highly recommend Decent Kids Wear!"</p>
+          <div class="testi-author">Priya Sharma</div>
+          <div class="testi-role">Mother of 2, Pune</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Fast delivery and packaging was perfect. The ethnic wear for my son's school function was exactly as shown. Will definitely order again!"</p>
+          <div class="testi-author">Rahul Patil</div>
+          <div class="testi-role">Father of 1, Nagpur</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Best kids clothing store online! The prices are so reasonable and the quality is top notch. My kids absolutely love everything I've ordered."</p>
+          <div class="testi-author">Sunita Desai</div>
+          <div class="testi-role">Mother of 3, Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="section" id="contact" style="background:var(--white)">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-sub">We'd love to hear from you</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4">
+        <div style="text-align:center;padding:28px;border:1.5px solid var(--pink-mid);border-radius:16px">
+          <div style="width:48px;height:48px;background:var(--pink-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.44 2 2 0 0 1 3.54 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px">Phone</div>
+          <div style="font-size:0.85rem;color:var(--gray)" id="contactPhone">+91 9876543210</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div style="text-align:center;padding:28px;border:1.5px solid var(--pink-mid);border-radius:16px">
+          <div style="width:48px;height:48px;background:var(--pink-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px">Email</div>
+          <div style="font-size:0.85rem;color:var(--gray)" id="contactEmail">shop@decentkidswear.com</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div style="text-align:center;padding:28px;border:1.5px solid var(--pink-mid);border-radius:16px">
+          <div style="width:48px;height:48px;background:var(--pink-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px">Address</div>
+          <div style="font-size:0.85rem;color:var(--gray)" id="contactAddress">Nanded, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-logo">Decent <span>Kids Wear</span></div>
+        <p class="footer-desc">Premium quality kids clothing for ages 0–12. Comfort, style and safety in every stitch.</p>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Quick Links</div>
+        <button class="footer-link" onclick="scrollTo('home')">Home</button>
+        <a class="footer-link" href="products.html">Products</a>
+        <a class="footer-link" href="cart.html">Cart</a>
+        <a class="footer-link" href="profile.html">My Profile</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Categories</div>
+        <a class="footer-link" href="products.html?cat=Frocks+%26+Dresses">Frocks</a>
+        <a class="footer-link" href="products.html?cat=Tops+%26+T-Shirts">Tops</a>
+        <a class="footer-link" href="products.html?cat=Ethnic+Wear">Ethnic</a>
+        <a class="footer-link" href="products.html?cat=Winter+Wear">Winter</a>
+      </div>
+      <div class="col-lg-4">
+        <div class="footer-heading">Our Promise</div>
+        <p style="font-size:0.82rem;line-height:1.7;color:#9ca3af">Every garment is made with premium fabrics and tested for child safety. We deliver happiness with every order.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 <strong>Decent Kids Wear</strong>. All Rights Reserved.</div>
+      <div>Project by <strong>Mahek Shaikh</strong> &amp; <strong>Sakshi Gaikwad</strong></div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── Auth Guard ──
+if(!localStorage.getItem('dkw_loggedCustomer')){
+  window.location.href='index.html';
+}
+
+// ── Helpers ──
+function getCart(){ return JSON.parse(localStorage.getItem('dkw_cart')||'[]'); }
+function saveCart(c){ localStorage.setItem('dkw_cart',JSON.stringify(c)); }
+function getProducts(){ return JSON.parse(localStorage.getItem('dkw_products')||'[]'); }
+
+// ── Toast ──
+function showToast(msg){
+  const wrap=document.getElementById('toastWrap');
+  const t=document.createElement('div');
+  t.className='toast-item';
+  t.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${msg}`;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+// ── Cart Count ──
+function updateCartCount(){
+  const cart=getCart();
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent=total;
+}
+
+// ── Add to Cart ──
+function addToCart(id){
+  const products=getProducts();
+  const prod=products.find(p=>p.id===id);
+  if(!prod) return;
+  const cart=getCart();
+  const existing=cart.find(i=>i.id===id);
+  if(existing){
+    existing.qty+=1;
+  } else {
+    cart.push({
+      id:prod.id, name:prod.name, price:prod.discountPrice||prod.price,
+      image:prod.image, category:prod.category, sizes:prod.sizes,
+      qty:1, stock:prod.stock
+    });
+  }
+  saveCart(cart);
+  updateCartCount();
+  showToast(`${prod.name} added to cart!`);
+}
+
+// ── Load Store Info ──
+function loadStoreInfo(){
+  const info=JSON.parse(localStorage.getItem('dkw_storeInfo')||'{}');
+  if(info.tagline){
+    document.getElementById('heroTagline').textContent=info.tagline;
+    document.getElementById('heroSubtag').textContent='';
+  }
+  if(info.about) document.getElementById('aboutText').textContent=info.about;
+  if(info.phone) document.getElementById('contactPhone').textContent=info.phone;
+  if(info.email) document.getElementById('contactEmail').textContent=info.email;
+  if(info.address) document.getElementById('contactAddress').textContent=info.address;
+  if(info.storeName) document.title=info.storeName+' – Home';
+  const banner=localStorage.getItem('dkw_banner');
+  if(banner){
+    const b=document.getElementById('heroBanner');
+    b.src=banner; b.style.display='block';
+  }
+  const icon=localStorage.getItem('dkw_siteIcon');
+  if(icon){
+    let link=document.querySelector("link[rel~='icon']");
+    if(!link){link=document.createElement('link');link.rel='icon';document.head.appendChild(link);}
+    link.href=icon;
+  }
+}
+
+// ── Load Featured Products (sale + latest 8) ──
+function loadFeatured(){
+  const products=getProducts();
+  document.getElementById('statProducts').textContent=products.length+'+';
+  if(products.length===0) return;
+  // show sale items first, then latest — max 8
+  const sale=products.filter(p=>p.sale);
+  const rest=products.filter(p=>!p.sale).slice(-8).reverse();
+  const featured=[...sale,...rest].slice(0,8);
+  const grid=document.getElementById('featuredGrid');
+  grid.innerHTML=featured.map(p=>`
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="product-card">
+        <div class="product-img-wrap">
+          ${p.image
+            ?`<img src="${p.image}" alt="${p.name}"/>`
+            :`<div class="product-no-img">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>No Image</span>
+              </div>`}
+          ${p.sale?'<span class="sale-pill">SALE</span>':''}
+        </div>
+        <div class="product-body">
+          <span class="product-category">${p.category}</span>
+          <div class="product-name">${p.name}</div>
+          ${p.description?`<div class="product-desc">${p.description}</div>`:''}
+          <div class="product-meta">
+            ${p.ageGroup?`<span>${p.ageGroup}</span>`:''}
+            ${p.sizes?`<span>${p.sizes}</span>`:''}
+          </div>
+          <div class="product-price-row">
+            <div>
+              ${p.discountPrice
+                ?`<span class="product-price-discount">₹${p.discountPrice}</span>
+                   <span class="product-price-original">₹${p.price}</span>`
+                :`<span class="product-price">₹${p.price}</span>`}
+            </div>
+            ${p.stock>0
+              ?`<button class="btn-add-cart" onclick="addToCart('${p.id}')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  Add
+                </button>`
+              :`<button class="btn-out-stock">Out of Stock</button>`}
+          </div>
+          ${p.stock>0 && p.stock<=5?`<div class="stock-low">Only ${p.stock} left!</div>`:''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+  const vaw=document.getElementById('viewAllWrap');
+  vaw.style.cssText='display:flex!important;justify-content:center;margin-top:24px';
+}
+
+// ── Profile initial ──
+function loadProfile(){
+  const user=JSON.parse(localStorage.getItem('dkw_loggedCustomer')||'{}');
+  if(user.name){
+    const pb=document.getElementById('profileBtn');
+    pb.textContent=user.name.charAt(0).toUpperCase();
+  }
+}
+
+// ── Scroll ──
+function scrollTo(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Mobile menu ──
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ── Logout ──
+function logout(){
+  if(!confirm('Logout?')) return;
+  localStorage.removeItem('dkw_loggedCustomer');
+  window.location.href='index.html';
+}
+
+// ── Init ──
+loadStoreInfo();
+loadFeatured();
+updateCartCount();
+loadProfile();
+</script>
+</body>
+</html>
